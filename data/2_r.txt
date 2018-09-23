@@ -1,0 +1,1 @@
+{'Funny': 544, 'Beautiful': 58, 'Ingenious': 56, 'Courageous': 139, 'Longwinded': 113, 'Confusing': 62, 'Informative': 443, 'Fascinating': 132, 'Unconvincing': 258, 'Persuasive': 268, 'Jaw-dropping': 116, 'OK': 203, 'Obnoxious': 131, 'Inspiring': 413}
