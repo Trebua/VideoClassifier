@@ -1,10 +1,12 @@
-#Laster ned video og ratings basert på datasett og legger alt under data-mappen
+#Laster ned videoer fra datasett og putter filmer i mapper om de har mer enn 0.75 ratings for kategori
 
 from TEDGet import download_ted #tar inn dwn_link (url fra dataset) og to_path (data/videoid++)
 import csv
 import json
 import ast
 from math import inf
+from shutil import copyfile
+import os
 
 def read_csv():
     #ratings er index 10
@@ -20,18 +22,26 @@ def read_csv():
         dwn_link = row[15]
         ratings = row[10]
 
-        to_path = "data/" + str(id)
-        vid_to_path = to_path + ".mp4"
-        rating_to_path = to_path + "_r" + ".txt"
+        dict = get_ratings(ratings)
+        created = ""
 
-        download_ted(dwn_link, vid_to_path)
-        write_ratings(ratings, rating_to_path)
+        for key in dict:
+            if dict[key][1] > 0.75:
+                subpath = "training/" + key
+                path = subpath + "/" + str(id) + ".mp4"
+                if not os.path.exists(subpath):
+                    os.makedirs(subpath)
+                if len(created) == 0:
+                    download_ted(dwn_link, path)
+                    created = path
+                else:
+                    copyfile(created, path)
         id += 1
+
     f.close()
 
-#Rydder opp ratings og skriver de til path
-#Må endres: finner nå prosentandel for hver rating utifra den som har fått flest votes
-def write_ratings(ratings, to_path):
+#Rydder opp i ratings og returnerer dictionary
+def get_ratings(ratings):
     lst = ast.literal_eval(ratings) #Evaluerer streng til liste og dictionary på en trygg måte
     dict = {} #dict vil være på formen: kategori : [antall stemmer, prosentandel av antall stemmer]
     max = -inf
@@ -45,7 +55,6 @@ def write_ratings(ratings, to_path):
     for key in dict:
         dict[key][1] = dict[key][0]/max #finner prosentandel som har stemt på kategorien
     
-    with open(to_path, 'w') as file: #Kan kanskje gjøres raskere og letter reverserbart med pickle dumps og loads
-        file.write(str(dict))
+    return dict
 
 read_csv()
