@@ -29,7 +29,8 @@ def read_csv():
             if dict[key][1] > 0.75:
                 #subpath = f"training/{key}"
                 subpath = "training/" + str(key)
-                path = f"{subpath}/{id}.mp4"
+                #path = f"{subpath}/{id}.mp4"
+                path = subpath + "/" + str(id) + ".mp4"
                 if not os.path.exists(subpath):
                     os.makedirs(subpath)
                 if len(created) == 0:
