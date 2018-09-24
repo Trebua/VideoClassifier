@@ -27,8 +27,8 @@ def read_csv():
 
         for key in dict:
             if dict[key][1] > 0.75:
-                subpath = "training/" + key
-                path = subpath + "/" + str(id) + ".mp4"
+                subpath = f"training/{key}"
+                path = f"{subpath}/{id}.mp4"
                 if not os.path.exists(subpath):
                     os.makedirs(subpath)
                 if len(created) == 0:
@@ -37,7 +37,6 @@ def read_csv():
                 else:
                     copyfile(created, path)
         id += 1
-
     f.close()
 
 #Rydder opp i ratings og returnerer dictionary
