@@ -9,7 +9,7 @@ from math import inf
 def read_csv():
     #ratings er index 10
     #url er nest siste index (15)
-    f = open('datasets/dataset_2.csv', 'r')
+    f = open('datasets/dataset_2.csv', 'r', encoding='utf-8')
     reader = csv.reader(f)
     id = 0
     for row in reader:

@@ -1,5 +1,4 @@
 #Laster ned videoer fra datasett og putter filmer i mapper om de har mer enn 0.75 ratings for kategori
-
 from TEDGet import download_ted #tar inn dwn_link (url fra dataset) og to_path (data/videoid++)
 import csv
 import json
@@ -11,7 +10,7 @@ import os
 def read_csv():
     #ratings er index 10
     #url er nest siste index (15)
-    f = open('datasets/dataset_2.csv', 'r')
+    f = open('datasets/dataset_2.csv', 'r', encoding='utf-8')
     reader = csv.reader(f)
     id = 0
     for row in reader:

@@ -1,6 +1,7 @@
+# coding=utf-8
+
 from urllib.request import urlopen
 import wget #må lastes ned med pip
-
 #Funksjonen lagrer video av LAV kvalitet (kan endres til høy eller medium) fra TED-talks
 #dwn_link:"https://www.ted.com/talks/ken_robinson_says_schools_kill_creativity"
 #to_path: /videos/vid1..vid2 etc

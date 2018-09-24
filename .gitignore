@@ -1,4 +1,5 @@
 
 __pycache__/TEDGet.cpython-36.pyc
 .vscode
-venv
+env
+*.pyc
