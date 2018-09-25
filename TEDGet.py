@@ -19,10 +19,3 @@ def download_ted(dwn_link, to_path):
 
     #Laster ned urlen fra forrige steg til to_path
     wget.download(url, to_path)
-
-#Kan evt hente ratings fra html også, men det ligger i datasettet
-def get_ratings():
-    rsp = urlopen("https://www.ted.com/talks/ken_robinson_says_schools_kill_creativity")
-    rsp_text = rsp.read()
-    print(rsp_text)
-
