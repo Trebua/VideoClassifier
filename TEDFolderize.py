@@ -1,5 +1,5 @@
 #Laster ned videoer fra datasett og putter filmer i mapper om de har mer enn 0.75 ratings for kategori
-from TEDGet import download_ted #tar inn dwn_link (url fra dataset) og to_path (data/videoid++)
+from TEDGetMP4 import download_ted #tar inn dwn_link (url fra dataset) og to_path (data/videoid++)
 import csv
 import json
 import ast
@@ -55,4 +55,4 @@ def get_ratings(ratings):
     
     return dict
 
-read_csv()
+#read_csv()
