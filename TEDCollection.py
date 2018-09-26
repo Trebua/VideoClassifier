@@ -1,6 +1,6 @@
 #Laster ned video og ratings basert på datasett og legger alt under data-mappen
 
-from TEDGet import download_ted #tar inn dwn_link (url fra dataset) og to_path (data/videoid++)
+from TEDGetMP4 import download_ted #tar inn dwn_link (url fra dataset) og to_path (data/videoid++)
 import csv
 import json
 import ast
@@ -48,4 +48,4 @@ def write_ratings(ratings, to_path):
     with open(to_path, 'w') as file: #Kan kanskje gjøres raskere og letter reverserbart med pickle dumps og loads
         file.write(str(dict))
 
-read_csv()
+#read_csv()
