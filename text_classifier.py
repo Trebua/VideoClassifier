@@ -96,11 +96,19 @@ estimator = tf.estimator.DNNClassifier(
 # Training for 1,000 steps means 128,000 training examples with the default
 # batch size. This is roughly equivalent to 5 epochs since the training dataset
 # contains 25,000 examples.
-estimator.train(input_fn=train_input_fn, steps=20)
+estimator.train(input_fn=train_input_fn, steps=200)
 
 train_eval_result = estimator.evaluate(input_fn=predict_train_input_fn)
 #test_eval_result = estimator.evaluate(input_fn=predict_test_input_fn)
 
 print("Training set accuracy: {accuracy}".format(**train_eval_result))
 #print("Test set accuracy: {accuracy}".format(**test_eval_result))
+
+test_df = load_dataset("subtitles")
+new_test = tf.estimator.inputs.pandas_input_fn(
+    test_df, test_df["polarity"], shuffle=False)
+
+new_res = estimator.evaluate(input_fn=new_test)
+print(new_res)
+
 
