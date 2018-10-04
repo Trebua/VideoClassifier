@@ -3,8 +3,11 @@ from TEDCollection import write_ratings
 import csv
 from TEDFolderize import get_ratings
 import os
-from urllib.request import urlopen
+#from urllib.request import urlopen
 import json
+import time
+import urllib.request
+
 
 #categories = ["Funny","Beautiful", "Ingenious", "Courageous", "Longwinded", "Confusing", "Informative", "Fascinating", "Unconvincing", "Persuasive","Jaw-dropping","OK","Obnoxious","Inspiring"]
 
@@ -40,8 +43,8 @@ def write_row(id, subtitles, r,filename = "subtitles/data.csv"):
         writer = csv.writer(f)
         writer.writerow([id,subtitles,r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7],r[8],r[9],r[10],r[11],r[12],r[13]])
 
-def dataset_to_csv(max_count = 150):
-    f = open('datasets/dataset_many.csv', 'r', encoding='utf-8')
+def dataset_to_csv(max_count = 200):
+    f = open('datasets/dataset.csv', 'r', encoding='utf-8')
     reader = csv.reader(f)
     id = 0
     with open("subtitles/data.csv", "w") as f:
@@ -56,21 +59,30 @@ def dataset_to_csv(max_count = 150):
         ratings = row[10]
         dict_ = get_ratings(ratings)
         labels = label_string(dict_)
+        time.sleep(1)
         subtitles = get_subtitles(id)
         if len(subtitles) > 0:
-            write_row(str(id), subtitles, labels)
+            try:
+                write_row(str(id), subtitles, labels)
+            except:
+                continue
         id+=1
     f.close()
 
 def get_subtitles(id, lang = "en"):
     try:
         url = f"https://www.ted.com/talks/subtitles/id/{id}/lang/{lang}"
-        rsp = urlopen(url)
+        hdr = {'User-agent': 'your bot 0.1'} #stygg workaround for rate-limiting
+        req = urllib.request.Request(url, headers=hdr)
+        rsp = urllib.request.urlopen(req)
+        #response.read()
+        #rsp = urlopen(url)
         rsp_text = rsp.read().decode()
         d = json.loads(rsp_text)
         text = text_from_dict(d)
         return text
-    except:
+    except Exception as e: 
+        print(e)
         return ""
 
 def text_from_dict(dict):
