@@ -5,7 +5,7 @@ import json
 
 
 #Denne metoden kan kansjke endres til å bruke request-bibl istedet?
-def download_subtitles(id, to_path, lang = "en"):
+def download_subtitles(id, to_path, lang = "en", additional_text = ""):
     url = f"https://www.ted.com/talks/subtitles/id/{id}/lang/{lang}"
     #Henter hele HTML-til dwn_link
     rsp = urlopen(url)
@@ -13,7 +13,7 @@ def download_subtitles(id, to_path, lang = "en"):
     d = json.loads(rsp_text)
     text = text_from_dict(d)
     f = open(to_path, "w")
-    f.write(text)
+    f.write(additional_text + "---" + text)
     f.close()
 
 def text_from_dict(dict):
