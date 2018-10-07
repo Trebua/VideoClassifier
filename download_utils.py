@@ -9,7 +9,7 @@ import json
 #to_path: /videos/vid1..vid2 etc
 def download_video(dwn_link, to_path):
     #Henter hele HTML-til dwn_link
-    rsp = urlopen(dwn_link)
+    rsp = urllib.urlopen(dwn_link)
     rsp_text = rsp.read()
 
     #Finner url for direkte nedlastning med litt triksing
