@@ -1,29 +1,28 @@
+import seaborn as               sns
+import numpy as                 np
+import matplotlib.pyplot as     plt
+import pandas as                pd
 import re
 import matplotlib
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
+import nltk
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
 from sklearn.multiclass import OneVsRestClassifier
 from nltk.corpus import stopwords
-import nltk
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-import seaborn as sns
 
 stop_words = set(stopwords.words('english'))
-df = pd.read_csv("subtitles/data.csv", encoding = "ISO-8859-1")
-df = df.head()
 
-df_toxic = df.drop(['id', 'subtitles'], axis=1)
+df = pd.read_csv("subtitles/data.csv", encoding = "ISO-8859-1")
+df_categories = df.drop(['id', 'subtitles'], axis=1)
 counts = []
-categories = list(df_toxic.columns.values)
+categories = list(df_categories.columns.values)
 for i in categories:
-    counts.append((i, df_toxic[i].sum()))
+    counts.append((i, df_categories[i].sum()))
 df_stats = pd.DataFrame(counts, columns=['category', 'number_of_comments'])
 
 df_stats.plot(x='category', y='number_of_comments', kind='bar', legend=False, grid=True, figsize=(8, 5))
@@ -55,8 +54,6 @@ categories = ["Funny","Beautiful", "Ingenious", "Courageous", "Longwinded", "Con
 train, test = train_test_split(df, random_state=42, test_size=0.2, shuffle=True)
 X_train = train.subtitles
 X_test = test.subtitles
-#print(X_train.shape)
-#print(X_test.shape)
 
 # Define a pipeline combining a text feature extractor with multi lable classifier
 NB_pipeline = Pipeline([
