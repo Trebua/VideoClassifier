@@ -3,30 +3,11 @@ from TEDCollection import write_ratings
 import csv
 from TEDFolderize import get_ratings
 import os
-#from urllib.request import urlopen
 import json
 import time
 import urllib.request
 
-
 #categories = ["Funny","Beautiful", "Ingenious", "Courageous", "Longwinded", "Confusing", "Informative", "Fascinating", "Unconvincing", "Persuasive","Jaw-dropping","OK","Obnoxious","Inspiring"]
-
-def dataset_to_text(max_count = 10):
-    f = open('datasets/dataset_10.csv', 'r', encoding='utf-8')
-    reader = csv.reader(f)
-    id = 0
-    for row in reader:
-        if id == 0: #første rad inneholder kolonnenavn
-            id += 1
-            continue
-        if id > max_count:
-            break
-        ratings = row[10]
-        dict_ = get_ratings(ratings)
-        labels = label_string(dict_)
-        download_subtitles(id, f"subtitles/{id}.txt",  additional_text=labels)
-        id+=1
-    f.close()
 
 def label_string(ratings):
     categories = ["Funny","Beautiful", "Ingenious", "Courageous", "Longwinded", "Confusing", "Informative", "Fascinating", "Unconvincing", "Persuasive","Jaw-dropping","OK","Obnoxious","Inspiring"]
@@ -44,6 +25,7 @@ def write_row(id, subtitles, r,filename = "subtitles/data.csv"):
         writer.writerow([id,subtitles,r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7],r[8],r[9],r[10],r[11],r[12],r[13]])
 
 def dataset_to_csv(max_count = 200):
+    bad_ids = [0,33]
     f = open('datasets/dataset.csv', 'r', encoding='utf-8')
     reader = csv.reader(f)
     id = 0
@@ -51,7 +33,7 @@ def dataset_to_csv(max_count = 200):
         writer = csv.writer(f)
         writer.writerow(["id","subtitles","Funny","Beautiful", "Ingenious", "Courageous", "Longwinded", "Confusing", "Informative", "Fascinating", "Unconvincing", "Persuasive","Jaw-dropping","OK","Obnoxious","Inspiring"])
     for row in reader:
-        if id == 0: #første rad inneholder kolonnenavn
+        if id in bad_ids:#første rad inneholder kolonnenavn
             id += 1
             continue
         if id > max_count:
@@ -75,8 +57,6 @@ def get_subtitles(id, lang = "en"):
         hdr = {'User-agent': 'your bot 0.1'} #stygg workaround for rate-limiting
         req = urllib.request.Request(url, headers=hdr)
         rsp = urllib.request.urlopen(req)
-        #response.read()
-        #rsp = urlopen(url)
         rsp_text = rsp.read().decode()
         d = json.loads(rsp_text)
         text = text_from_dict(d)
