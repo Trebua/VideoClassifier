@@ -56,46 +56,12 @@ train, test = train_test_split(df, random_state=42, test_size=0.2, shuffle=True)
 X_train = train.subtitles
 X_test = test.subtitles
 
-# Define a pipeline combining a text feature extractor with multi lable classifier
-NB_pipeline = Pipeline([
-                ('tfidf', TfidfVectorizer(stop_words=stop_words)),
-                ('clf', OneVsRestClassifier(MultinomialNB(
-                    fit_prior=True, class_prior=None))),
-            ])
+#ALT OVENFOR ER HELT LIKT TEXTCLASSIFIER.PY, KUN FOR Å FÅ TAK I DATAEN PÅ SAMME FORMAT
+
+model = joblib.load("model.joblib")
+
 for category in categories:
     print('... Processing {}'.format(category))
-    # train the model using X_dtm & y
-    NB_pipeline.fit(X_train, train[category])
-    # compute the testing accuracy
-    prediction = NB_pipeline.predict(X_test)
+    prediction = model.predict(X_test)
     print('Test accuracy is {}'.format(accuracy_score(test[category], prediction)))
 
-joblib.dump(NB_pipeline, 'model.joblib') 
-
-'''
-SVC_pipeline = Pipeline([
-                ('tfidf', TfidfVectorizer(stop_words=stop_words)),
-                ('clf', OneVsRestClassifier(LinearSVC(), n_jobs=1)),
-            ])
-for category in categories:
-    print('... Processing {}'.format(category))
-    # train the model using X_dtm & y
-    SVC_pipeline.fit(X_train, train[category])
-    # compute the testing accuracy
-    prediction = SVC_pipeline.predict(X_test)
-    print('Test accuracy is {}'.format(accuracy_score(test[category], prediction)))
-'''
-
-'''
-LogReg_pipeline = Pipeline([
-                ('tfidf', TfidfVectorizer(stop_words=stop_words)),
-                ('clf', OneVsRestClassifier(LogisticRegression(solver='sag'), n_jobs=1)),
-            ])
-for category in categories:
-    print('... Processing {}'.format(category))
-    # train the model using X_dtm & y
-    LogReg_pipeline.fit(X_train, train[category])
-    # compute the testing accuracy
-    prediction = LogReg_pipeline.predict(X_test)
-    print('Test accuracy is {}'.format(accuracy_score(test[category], prediction)))
-'''
