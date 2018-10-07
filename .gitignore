@@ -1,5 +1,9 @@
 
 __pycache__/TEDGet.cpython-36.pyc
 .vscode
-env
+venv
 *.pyc
+.idea
+data/
+tfrecords/
+training/

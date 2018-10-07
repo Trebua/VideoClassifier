@@ -10,6 +10,7 @@ import os
 def read_csv():
     #ratings er index 10
     #url er nest siste index (15)
+
     f = open('datasets/dataset_2.csv', 'r', encoding='utf-8')
     reader = csv.reader(f)
     id = 0
@@ -55,4 +56,4 @@ def get_ratings(ratings):
     
     return dict
 
-#read_csv()
+read_csv()

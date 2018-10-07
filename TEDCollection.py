@@ -5,6 +5,10 @@ import csv
 import json
 import ast
 from math import inf
+import os
+from shutil import copyfile
+
+
 
 def read_csv():
     #ratings er index 10
@@ -20,9 +24,15 @@ def read_csv():
         dwn_link = row[15]
         ratings = row[10]
 
-        to_path = "data/" + str(id)
+        to_path = f"data/{id}"
+
+        # to_path = "data/" + str(id)
         vid_to_path = to_path + ".mp4"
         rating_to_path = to_path + "_r" + ".txt"
+
+        if not os.path.exists(to_path):
+            os.makedirs(to_path)
+
 
         download_ted(dwn_link, vid_to_path)
         write_ratings(ratings, rating_to_path)
@@ -48,4 +58,4 @@ def write_ratings(ratings, to_path):
     with open(to_path, 'w') as file: #Kan kanskje gjøres raskere og letter reverserbart med pickle dumps og loads
         file.write(str(dict))
 
-#read_csv()
+read_csv()
