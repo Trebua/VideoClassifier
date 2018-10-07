@@ -15,6 +15,7 @@ from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.externals import joblib
+'''
 
 stop_words = set(stopwords.words('english'))
 
@@ -59,9 +60,20 @@ X_test = test.subtitles
 #ALT OVENFOR ER HELT LIKT TEXTCLASSIFIER.PY, KUN FOR Å FÅ TAK I DATAEN PÅ SAMME FORMAT
 
 model = joblib.load("model.joblib")
+prediction = model.predict(X_test)
+'''
+'''
 
 for category in categories:
     print('... Processing {}'.format(category))
     prediction = model.predict(X_test)
     print('Test accuracy is {}'.format(accuracy_score(test[category], prediction)))
+'''
+pipe = joblib.load("model.joblib")
+df = pd.read_csv('subtitles/data_small.csv')
+df_categories = df.drop(['id', 'subtitles'], axis=1)
+categories = list(df_categories.columns.values)
 
+# apply the whole pipeline to data
+pred = pd.Series(pipe.predict(df[categories]z))
+print(pred)
