@@ -56,4 +56,4 @@ def get_ratings(ratings):
     
     return dict
 
-read_csv()
+#read_csv()

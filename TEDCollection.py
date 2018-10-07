@@ -58,4 +58,4 @@ def write_ratings(ratings, to_path):
     with open(to_path, 'w') as file: #Kan kanskje gjøres raskere og letter reverserbart med pickle dumps og loads
         file.write(str(dict))
 
-read_csv()
+#read_csv()
