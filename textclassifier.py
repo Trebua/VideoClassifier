@@ -18,7 +18,7 @@ from sklearn.externals import joblib
 
 stop_words = set(stopwords.words('english'))
 
-df = pd.read_csv("subtitles/data.csv", encoding = "ISO-8859-1")
+df = pd.read_csv("subtitles/complete_en.csv", encoding = "ISO-8859-1")
 df_categories = df.drop(['id', 'subtitles'], axis=1)
 counts = []
 categories = list(df_categories.columns.values)
